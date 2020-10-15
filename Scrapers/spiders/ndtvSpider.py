@@ -6,13 +6,13 @@ class NDTVSpider(scrapy.Spider):
 
     def parse(self,response):
 
-        all_headers = response.css('h2.nstory_header')
-        all_headers_links = response.css('h2.nstory_header a::attr(href)').extract()
-        all_header_text = response.css('h2.nstory_header a::attr(title)').extract()
-        
-        for header in all_headers:
-            header_text = header.css('a::attr(title)').extract()
-            header_link = header.css('a::attr(href)').extract()
+        all_headlines = response.css('div.new_storylising_contentwrap')
+        for header in all_headlines:
+            header_text = header.css('h2.nstory_header a::attr(title)').extract()
+            header_link = header.css('h2.nstory_header a::attr(href)').extract()
+            description = header.css('div.nstory_intro::text').extract()
             yield {
-                'headers': text
+                'text': header_text,
+                'link': header_link,
+                'desc': description
             }

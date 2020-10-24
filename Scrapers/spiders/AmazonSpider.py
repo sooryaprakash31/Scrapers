@@ -7,7 +7,7 @@ class AmazonSpider(scrapy.Spider):
 
     def __init__(self, product):
         product = product.replace(" ","+")
-        AmazonSpider.start_urls = ["https://www.amazon.in/s?k="+product]
+        self.start_urls[0] = self.start_urls[0] + product
 
     def parse(self,respose):
 

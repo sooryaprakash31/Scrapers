@@ -7,8 +7,7 @@ class FlipkartSpider(scrapy.Spider):
 
     def __init__(self, product):
         product = product.replace(" ","+")
-        FlipkartSpider.start_urls = ["https://www.flipkart.com/search?q="+product]
-
+        self.start_urls[0] = self.start_urls[0] + product
     def parse(self, response):
 
         all_products_names = response.css('._3wU53n::text').extract()

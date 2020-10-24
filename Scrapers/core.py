@@ -1,6 +1,7 @@
 from spiders.NDTVSpider import NDTVSpider
 from spiders.TimesOfIndiaSpider import TimesOfIndiaSpider
 from spiders.AmazonSpider import AmazonSpider
+from spiders.FlipkartSpider import FlipkartSpider
 
 from scrapy.crawler import CrawlerProcess
 
@@ -8,9 +9,10 @@ import sys
 
 def start_crawlers(product):
     process = CrawlerProcess()
-    # process.crawl(NDTVSpider)
-    # process.crawl(TimesOfIndiaSpider)
+    process.crawl(NDTVSpider)
+    process.crawl(TimesOfIndiaSpider)
     process.crawl(AmazonSpider,product=arg)
+    process.crawl(FlipkartSpider,product=arg)
     process.start()
 
 

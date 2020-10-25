@@ -20,8 +20,14 @@ class FlipkartSpider(scrapy.Spider):
             product_price = all_products_prices[i]
             product_link = "https://www.flipkart.com" +all_products_links[i]
         
-            yield {
-                "product_name":product_name,
-                "product_price": product_price,
+            # yield {
+            #     "product_name":product_name,
+            #     "product_price": product_price,
+            #     "product_link": product_link
+            # }
+
+            return {
+                "product_name": product_name,
+                "product_price":product_price,
                 "product_link": product_link
             }

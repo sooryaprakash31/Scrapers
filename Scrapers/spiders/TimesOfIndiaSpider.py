@@ -17,4 +17,8 @@ class TimesOfIndiaSpider(scrapy.Spider):
                 'link': headline_link,
                 'desc': description
             }
-        
+            return {
+                'text': headline_text,
+                'link': headline_link,
+                'desc': description
+            }

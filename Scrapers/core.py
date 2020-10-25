@@ -15,11 +15,31 @@ def start_crawlers(product):
     process.crawl(FlipkartSpider,product=arg)
     process.start()
 
+class NDTVCrawler:
+    def __init__(self):
+        self.output = None
+        self.process = CrawlerProcess(settings={'LOG_ENABLED': False})
+
+    def yield_output(self, data):
+        self.output = data
+
+    def crawl(self, cls):
+        self.process.crawl(cls, args={'callback': self.yield_output})
+        self.process.start()
+
+def start_ndtv(cls):
+    crawler = NDTVCrawler()
+    crawler.crawl(cls)
+    # print(crawler.output)
+    return crawler.output
+
+
 
 if __name__ == '__main__':
     try:
         arg = sys.argv[1]
     except IndexError:
         arg = None
-    if arg is not None:
-        return_val = start_crawlers(product=arg)
+    if arg is None:
+        return_val = start_ndtv(NDTVSpider)
+        print("The result", return_val)

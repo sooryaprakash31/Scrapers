@@ -20,7 +20,13 @@ class AmazonSpider(scrapy.Spider):
             product_price = all_products_prices[i]
             product_link = "https://www.amazon.in" + str(all_products_links[i])
 
-            yield {
+            # yield {
+            #     "product_name": product_name,
+            #     "product_price":product_price,
+            #     "product_link": product_link
+            # }
+
+            return {
                 "product_name": product_name,
                 "product_price":product_price,
                 "product_link": product_link

@@ -4,10 +4,14 @@ class FlipkartSpider(scrapy.Spider):
     
     name = "flipkart"
     start_urls = ["https://www.flipkart.com/search?q="]
+    products = {}
 
-    def __init__(self, product):
-        product = product.replace(" ","+")
-        self.start_urls[0] = self.start_urls[0] + product
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.output_callback = kwargs.get('args').get('callback')
+        self.product = kwargs.get('args').get('product')
+        self.start_urls[0] = self.start_urls[0] + self.product
+    
     def parse(self, response):
 
         all_products_names = response.css('._3wU53n::text').extract()
@@ -19,15 +23,12 @@ class FlipkartSpider(scrapy.Spider):
             product_name = all_products_names[i]
             product_price = all_products_prices[i]
             product_link = "https://www.flipkart.com" +all_products_links[i]
-        
-            # yield {
-            #     "product_name":product_name,
-            #     "product_price": product_price,
-            #     "product_link": product_link
-            # }
 
-            return {
-                "product_name": product_name,
-                "product_price":product_price,
-                "product_link": product_link
+            self.products[i] = {
+                "name": product_name,
+                "price":product_price,
+                "link": product_link
             }
+    
+    def close(self, spider, reason):
+        self.output_callback(self.products)

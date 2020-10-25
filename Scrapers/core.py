@@ -23,8 +23,11 @@ class StartCrawler:
     def yield_output(self, data):
         self.output = data
 
-    def crawl(self, cls):
-        self.process.crawl(cls, args={'callback': self.yield_output})
+    def crawl(self, cls, product=None):
+        if product is not None:
+            self.process.crawl(cls, args={'callback': self.yield_output, 'product':product})
+        else:
+            self.process.crawl(cls, args={'callback': self.yield_output})
         self.process.start()
 
 def start_ndtv(cls):
@@ -37,6 +40,15 @@ def start_timesofindia(cls):
     crawler.crawl(cls)
     return crawler.output
 
+def start_amazon(cls, product):
+    crawler = StartCrawler()
+    crawler.crawl(cls, product)
+    return crawler.output
+
+def start_flipkart(cls,product):
+    crawler = StartCrawler()
+    crawler.crawl(cls,product)
+    return crawler.output
 
 if __name__ == '__main__':
     try:
@@ -44,5 +56,6 @@ if __name__ == '__main__':
     except IndexError:
         arg = None
     if arg is None:
-        return_val = start_timesofindia(TimesOfIndiaSpider)
+        return_val = start_amazon(AmazonSpider, "mi a3")
         print("The result", return_val)
+

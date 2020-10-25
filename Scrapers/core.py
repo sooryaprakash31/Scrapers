@@ -7,15 +7,15 @@ from scrapy.crawler import CrawlerProcess
 
 import sys
 
-def start_crawlers(product):
-    process = CrawlerProcess()
-    process.crawl(NDTVSpider)
-    process.crawl(TimesOfIndiaSpider)
-    process.crawl(AmazonSpider,product=arg)
-    process.crawl(FlipkartSpider,product=arg)
-    process.start()
+# def start_crawlers(product):
+#     process = CrawlerProcess()
+#     process.crawl(NDTVSpider)
+#     process.crawl(TimesOfIndiaSpider)
+#     process.crawl(AmazonSpider,product=arg)
+#     process.crawl(FlipkartSpider,product=arg)
+#     process.start()
 
-class NDTVCrawler:
+class StartCrawler:
     def __init__(self):
         self.output = None
         self.process = CrawlerProcess(settings={'LOG_ENABLED': False})
@@ -28,11 +28,14 @@ class NDTVCrawler:
         self.process.start()
 
 def start_ndtv(cls):
-    crawler = NDTVCrawler()
+    crawler = StartCrawler()
     crawler.crawl(cls)
-    # print(crawler.output)
     return crawler.output
 
+def start_timesofindia(cls):
+    crawler = StartCrawler()
+    crawler.crawl(cls)
+    return crawler.output
 
 
 if __name__ == '__main__':
@@ -41,5 +44,5 @@ if __name__ == '__main__':
     except IndexError:
         arg = None
     if arg is None:
-        return_val = start_ndtv(NDTVSpider)
+        return_val = start_timesofindia(TimesOfIndiaSpider)
         print("The result", return_val)

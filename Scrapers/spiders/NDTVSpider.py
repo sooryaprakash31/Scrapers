@@ -20,6 +20,8 @@ class NDTVSpider(scrapy.Spider):
             description = all_headlines[i].css('div.nstory_intro::text').extract_first()
 
             self.headlines[i] = {'text':headline_text, 'link': headline_link, 'desc': description}
+ 
+        # return self.headlines
     
     def close(self, spider, reason):
-        self.output_callback(self.headlines)
+        self.output_callback(self.headlines,"NDTV")

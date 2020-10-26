@@ -31,4 +31,4 @@ class FlipkartSpider(scrapy.Spider):
             }
     
     def close(self, spider, reason):
-        self.output_callback(self.products)
+        self.output_callback(self.products,"Flipkart")

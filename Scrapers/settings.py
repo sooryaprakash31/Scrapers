@@ -16,7 +16,9 @@ NEWSPIDER_MODULE = 'Scrapers.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Scrapers (+http://www.yourdomain.com)'
 
-LOG_ENABLED = 0
+LOG_ENABLED = False
+
+LOG_LEVEL = 'INFO'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False

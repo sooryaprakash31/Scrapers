@@ -21,4 +21,4 @@ class TimesOfIndiaSpider(scrapy.Spider):
             self.headlines[i] = {'text':headline_text, 'link': headline_link, 'desc': description}
 
     def close(self, spider, reason):
-        self.output_callback(self.headlines)
+        self.output_callback(self.headlines,"TimesofIndia")

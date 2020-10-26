@@ -9,7 +9,7 @@ class NDTVSpider(scrapy.Spider):
         super().__init__(**kwargs)
         self.output_callback = kwargs.get('args').get('callback')
 
-
+    #scrapes the required data from the response    
     def parse(self,response):
 
         all_headlines = response.css('div.new_storylising_contentwrap')
@@ -20,8 +20,8 @@ class NDTVSpider(scrapy.Spider):
             description = all_headlines[i].css('div.nstory_intro::text').extract_first()
 
             self.headlines[i] = {'text':headline_text, 'link': headline_link, 'desc': description}
- 
-        # return self.headlines
+
     
+    #execuctes when the spider finished scraping
     def close(self, spider, reason):
         self.output_callback(self.headlines,"NDTV")

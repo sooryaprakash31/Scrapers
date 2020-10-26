@@ -12,6 +12,7 @@ class FlipkartSpider(scrapy.Spider):
         self.product = kwargs.get('args').get('product')
         self.start_urls[0] = self.start_urls[0] + self.product
     
+    #scrapes the required data from the response    
     def parse(self, response):
 
         all_products_names = response.css('._3wU53n::text').extract()
@@ -30,5 +31,6 @@ class FlipkartSpider(scrapy.Spider):
                 "link": product_link
             }
     
+    #execuctes when the spider finished scraping
     def close(self, spider, reason):
         self.output_callback(self.products,"Flipkart")

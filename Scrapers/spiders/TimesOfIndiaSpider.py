@@ -9,7 +9,8 @@ class TimesOfIndiaSpider(scrapy.Spider):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.output_callback = kwargs.get('args').get('callback')
-
+    
+    #scrapes the required data from the response
     def parse(self, response):
         
         all_headlines = response.css('div.brief_box')
@@ -20,5 +21,6 @@ class TimesOfIndiaSpider(scrapy.Spider):
             
             self.headlines[i] = {'text':headline_text, 'link': headline_link, 'desc': description}
 
+    #execuctes when the spider finished scraping
     def close(self, spider, reason):
         self.output_callback(self.headlines,"TimesofIndia")

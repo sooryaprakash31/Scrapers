@@ -3,7 +3,8 @@ from spiders.TimesOfIndiaSpider import TimesOfIndiaSpider
 from spiders.AmazonSpider import AmazonSpider
 from spiders.FlipkartSpider import FlipkartSpider
 
-from scrapy.crawler import CrawlerProcess
+from scrapy.crawler import CrawlerProcess,CrawlerRunner
+from twisted.internet import reactor
 
 import sys
 import time
@@ -13,7 +14,8 @@ class Controller:
     #initializing runner with CrawlerProcess() 
     def __init__(self):
         self.output = {}
-        self.runner = CrawlerProcess(settings={'LOG_ENABLED': False})
+        #self.runner = CrawlerProcess(settings={'LOG_ENABLED': False})
+        self.runner = CrawlerRunner(settings={'LOG_ENABLED': False})
 
     #Adds spiders to the queue of the reactor 
     def start_crawler(self,runner, spider, product=None):
@@ -43,8 +45,12 @@ class Controller:
             return "Invalid keyword"
 
         #starts the crawling one by one
-        self.runner.start()
-
+        #self.runner.start()
+        
+        d = self.runner.join()
+        d.addBoth(lambda _: reactor.stop())
+        reactor.run()
+        
         #returns the output
         return self.output
 
